@@ -1,0 +1,28 @@
+
+
+Deploying as a Service (Auto-Restart Setup)
+Linux (systemd):
+
+Create a service file (e.g., /etc/systemd/system/tauri-watchdog.service) that runs your executable.
+
+Configure options like Restart=always and RestartSec=3 so that the systemd manager restarts the watchdog if it fails.
+
+Test by enabling and starting the service.
+
+macOS (launchd):
+
+Create a plist file (e.g., ~/Library/LaunchAgents/com.yourcompany.watchdog.plist) with keys like KeepAlive and RunAtLoad.
+
+Load it using launchctl load.
+
+Windows (Task Scheduler):
+
+Create a scheduled task using schtasks /Create with a repeating trigger to run your watchdog executable with highest privileges.
+
+schtasks /Create /TN "TauriWatchdog" /TR "C:\Users\user\Downloads\__MACOSX\Dobby for windows\dobby_watchdog\target\debug\dobby_watchdog.exe" /SC ONSTART /RU SYSTEM /RL HIGHEST /F
+
+powershell
+$action = New-ScheduledTaskAction -Execute "C:\path\to\watchdog.exe"
+$trigger = New-ScheduledTaskTrigger -AtStartup
+$principal = New-ScheduledTaskPrincipal -UserId "SYSTEM" -RunLevel Highest
+Register-ScheduledTask -TaskName "TauriWatchdog" -Action $action -Trigger $trigger -Principal $principal -Force

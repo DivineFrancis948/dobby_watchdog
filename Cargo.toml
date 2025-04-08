@@ -1,0 +1,11 @@
+[package]
+name = "dobby_watchdog"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+tokio = { version =  "1.44.2", features = ["full"] }  #need full here
+tokio-tungstenite = { version = "0.26.2", features = ["native-tls"] }
+log="0.4.27"
+tracing = "0.1"
+tracing-subscriber = "0.3"
